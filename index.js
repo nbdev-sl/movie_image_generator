@@ -28,30 +28,29 @@ app.get('/', async (req, res) => {
     }
 
     if (filteredResults.length > 0) {
-      const movies = filteredResults.map(movieInfo => {
-        const {
-          title,
-          release_date,
-          poster_path,
-          backdrop_path,
-          vote_count,
-        } = movieInfo;
+      const movieInfo = filteredResults[0]; // Take the first movie
+      const {
+        title,
+        release_date,
+        poster_path,
+        backdrop_path,
+        vote_count,
+      } = movieInfo;
 
-        // Constructing image URLs
-        const baseImageUrl = 'https://image.tmdb.org/t/p/';
-        const posterUrl = poster_path ? `${baseImageUrl}w300${poster_path}` : null; // Adjust the size as needed
-        const backdropUrl = backdrop_path ? `${baseImageUrl}w1280${backdrop_path}` : null; // Adjust the size as needed
+      // Constructing image URLs
+      const baseImageUrl = 'https://image.tmdb.org/t/p/';
+      const posterUrl = poster_path ? `${baseImageUrl}w300${poster_path}` : null; // Adjust the size as needed
+      const backdropUrl = backdrop_path ? `${baseImageUrl}w1280${backdrop_path}` : null; // Adjust the size as needed
 
-        return {
-          title,
-          release_date,
-          poster_url: posterUrl,
-          backdrop_url: backdropUrl,
-          vote_count,
-        };
-      });
+      const movie = {
+        title,
+        release_date,
+        poster_url: posterUrl,
+        backdrop_url: backdropUrl,
+        vote_count,
+      };
 
-      res.json(movies);
+      res.json(movie);
     } else {
       res.status(404).json({ error: 'Movie not found' });
     }
